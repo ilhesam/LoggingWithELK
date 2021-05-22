@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuyService.Logging;
 
 namespace BuyService
 {
@@ -26,7 +27,7 @@ namespace BuyService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -37,6 +38,8 @@ namespace BuyService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            CustomLogEnricher.ServiceProvider = app.ApplicationServices;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

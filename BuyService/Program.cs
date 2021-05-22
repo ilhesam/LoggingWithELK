@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuyService.Logging;
 using Serilog;
 
 namespace BuyService
@@ -16,6 +17,7 @@ namespace BuyService
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Http("http://192.168.1.1:28080")
+                .Enrich.With(new CustomLogEnricher())
                 .CreateLogger();
 
             CreateHostBuilder(args).Build().Run();
